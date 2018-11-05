@@ -2,7 +2,9 @@ package servico.impl;
 
 import java.util.List;
 
+import anotacao.Autowired;
 import anotacao.RollbackFor;
+import anotacao.Transactional;
 import dao.ContaDAO;
 import excecao.ClienteNaoEncontradoException;
 import excecao.ContaNaoEncontradaException;
@@ -12,8 +14,10 @@ import servico.ContaAppService;
 
 public class ContaAppServiceImpl implements ContaAppService
 {	
-	private static ContaDAO contaDAO;
+	@Autowired
+	public static ContaDAO contaDAO;
 
+	@Transactional
 	public long inclui(Conta umaConta) 
 	{	
 		System.out.println("\nDentro de ContaAppServiceImpl. Vai chamar o método inclui() de ContaDAOImpl.");
@@ -26,6 +30,7 @@ public class ContaAppServiceImpl implements ContaAppService
 	}
 
 	
+	@Transactional
 	@RollbackFor(nomes={ContaNaoEncontradaException.class, 
 			            ClienteNaoEncontradoException.class})
 	public void altera(Conta umaConta)
@@ -45,6 +50,7 @@ public class ContaAppServiceImpl implements ContaAppService
 		}
 	}
 	
+	@Transactional
 	public void exclui(long numero) 
 		throws ContaNaoEncontradaException
 	{	
@@ -62,6 +68,7 @@ public class ContaAppServiceImpl implements ContaAppService
 		}
 	}
 
+	@Transactional
 	public void debita(Conta umaConta, double valor)
 		throws ContaNaoEncontradaException
 	{	
@@ -79,6 +86,7 @@ public class ContaAppServiceImpl implements ContaAppService
 		}
 	}
 		
+	@Transactional
 	public void credita(Conta umaConta, double valor)
 		throws ContaNaoEncontradaException
 	{	
@@ -97,6 +105,7 @@ public class ContaAppServiceImpl implements ContaAppService
 	}
 	
 	@Override
+	@Transactional
 	public void transfereValor(Conta contaDebitada, Conta contaCreditada, double valor)
 		throws ContaNaoEncontradaException
 	{	
